@@ -1,0 +1,34 @@
+version: "3.7"
+services:
+  scharp-dev:
+    build: .
+    user: "root"
+    environment:
+      - NODE_ENV=debug
+      - SHARP_PORT=8080
+      - SHARP_HOST=0.0.0.0
+      - SHARP_IMAGES_MOUNT=/mnt/images
+      - SHARP_IMAGES_RESULT=/mnt/result
+    volumes:
+      - ./src:/app/src
+      - ./images:/app/images
+      - ./result:/app/result
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
+    command: npm start
+  scharp-pro:
+    image: frankii91/sharp:latest
+    user: "root"
+    environment:
+      - NODE_ENV=production
+      - SHARP_PORT=88
+      - SHARP_HOST=0.0.0.0
+      - SHARP_IMAGES_MOUNT=/mnt/images
+      - SHARP_IMAGES_RESULT=/mnt/result
+    ports:
+      - target: 88
+        published: 8181
+        protocol: tcp
+    command: npm start
